@@ -1,0 +1,420 @@
+.product-detail-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+  width: 100%;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-left {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 2.5rem;
+  width: auto;
+  margin: 0;
+  object-fit: contain;
+}
+
+.nav-right {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.icon-button:hover {
+  opacity: 0.7;
+}
+
+.search-icon-button {
+  position: relative;
+}
+
+.search-icon-button svg {
+  transition: transform 0.3s ease;
+}
+
+.search-icon-button:hover svg {
+  animation: searchPulse 1s ease infinite;
+}
+
+@keyframes searchPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.header-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+}
+
+/* Product Detail Main */
+.product-detail-main {
+  flex: 1;
+  padding: 4rem 2rem;
+}
+
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+  align-items: start;
+}
+
+/* Product Details (Left Column) */
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.product-detail-name {
+  font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+}
+
+.product-detail-size {
+  font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+}
+
+.product-detail-price {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #000000;
+  margin: 0.5rem 0;
+}
+
+.stock-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 2px solid #22c55e;
+  border-radius: 20px;
+  margin: 1rem 0;
+}
+
+.stock-badge span {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #22c55e;
+}
+
+.quantity-cart-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quantity-button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.quantity-button:hover {
+  background-color: #f5f5f5;
+}
+
+.quantity-value {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+  min-width: 50px;
+  text-align: center;
+}
+
+.add-to-cart-button {
+  padding: 0.75rem 2rem;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  white-space: nowrap;
+}
+
+.add-to-cart-button:hover {
+  background-color: #333333;
+}
+
+/* Product Image (Right Column) */
+.product-image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-detail-image-container {
+  width: 100%;
+  max-width: 500px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.product-detail-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Description Section */
+.product-description-section {
+  margin-top: 3rem;
+}
+
+.description-title {
+  font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #000000;
+  margin: 0 0 1.5rem 0;
+}
+
+.description-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #000000;
+  margin: 0;
+}
+
+/* Footer */
+.footer {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  padding: 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-text {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ffffff;
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+}
+
+.instagram-handle {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.not-found {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.not-found h2 {
+  font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.not-found a {
+  color: #000000;
+  text-decoration: underline;
+}
+
+/* Add to Cart Notification */
+.add-to-cart-notification {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 1000;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.notification-content {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.notification-content svg {
+  flex-shrink: 0;
+  stroke: #ffffff;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-bar {
+    padding: 1rem 1.5rem;
+  }
+
+  .logo {
+    height: 2rem;
+  }
+
+  .nav-left {
+    gap: 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+
+  .product-detail-main {
+    padding: 2rem 1rem;
+  }
+
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product-detail-name {
+    font-size: 2rem;
+  }
+
+  .product-detail-size {
+    font-size: 1.25rem;
+  }
+
+  .quantity-cart-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-to-cart-button {
+    width: 100%;
+  }
+
+  .product-detail-image-container {
+    height: 400px;
+  }
+
+  .footer {
+    padding: 1.5rem 2rem;
+  }
+}
+
