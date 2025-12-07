@@ -1,0 +1,419 @@
+.receipt-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+  width: 100%;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-left {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 2.5rem;
+  width: auto;
+  margin: 0;
+  object-fit: contain;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.icon-button:hover {
+  opacity: 0.7;
+}
+
+.header-divider {
+  height: 1px;
+  background-color: #e5e5e5;
+  width: 100%;
+}
+
+/* Main Content */
+.receipt-main {
+  flex: 1;
+  padding: 3rem 2rem;
+}
+
+.receipt-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.receipt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.receipt-title {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+}
+
+.back-button {
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.back-button:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.receipt-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.receipt-section {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Order Info */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-label {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.info-value {
+  font-size: 1rem;
+  color: #000000;
+  font-weight: 500;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: fit-content;
+}
+
+/* Address Block */
+.address-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.address-line {
+  font-size: 1rem;
+  color: #000000;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Items List */
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.receipt-item {
+  display: flex;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.receipt-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.receipt-item-image-container {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.receipt-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.receipt-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.receipt-item-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.receipt-item-info {
+  font-size: 0.9rem;
+  color: #666666;
+  margin: 0;
+}
+
+.receipt-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.receipt-item-quantity {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.receipt-item-price {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+}
+
+/* Summary Block */
+.summary-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  font-size: 1rem;
+  color: #666666;
+}
+
+.summary-value {
+  font-size: 1rem;
+  color: #000000;
+  font-weight: 500;
+}
+
+.summary-total {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+.summary-total .summary-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.summary-total .summary-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #666666;
+}
+
+/* Not Found */
+.not-found {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.not-found h2 {
+  font-size: 2rem;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.not-found p {
+  font-size: 1rem;
+  color: #666666;
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #000000;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.back-link:hover {
+  background-color: #333333;
+}
+
+/* Footer */
+.footer {
+  background-color: #ffffff;
+  padding: 2rem 3rem;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  color: #666666;
+  margin: 0;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666666;
+}
+
+.instagram-handle {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-bar {
+    padding: 1rem 1.5rem;
+  }
+
+  .receipt-main {
+    padding: 2rem 1rem;
+  }
+
+  .receipt-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .receipt-title {
+    font-size: 2rem;
+  }
+
+  .receipt-section {
+    padding: 1.5rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .receipt-item {
+    flex-direction: column;
+  }
+
+  .receipt-item-image-container {
+    width: 100%;
+    height: 200px;
+  }
+
+  .receipt-item-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .footer {
+    padding: 1.5rem 2rem;
+  }
+}
+

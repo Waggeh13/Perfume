@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import CartIcon from '../components/CartIcon';
-import './Home.css';
+import '../styles/pages/Home.css';
 
 const Home = () => {
   const { addToCart } = useCart();
@@ -66,6 +66,7 @@ const Home = () => {
           <div className="nav-left">
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/shop" className="nav-link">Shop</Link>
+            <Link to="/orders" className="nav-link">My Orders</Link>
           </div>
           <div className="nav-center">
             <img src="/perfume_logo.png" alt="NOULA" className="logo" />

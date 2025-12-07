@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import CartIcon from '../components/CartIcon';
-import './Cart.css';
+import '../styles/pages/Cart.css';
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, getTotalPrice } = useCart();
+  const navigate = useNavigate();
 
   const deliveryFee = 59.99;
   const tax = 5.00;
@@ -46,6 +47,7 @@ const Cart = () => {
           <div className="nav-left">
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/shop" className="nav-link">Shop</Link>
+            <Link to="/orders" className="nav-link">My Orders</Link>
           </div>
           <div className="nav-center">
             <img src="/perfume_logo.png" alt="NOULA" className="logo" />
@@ -147,9 +149,8 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <button className="buy-now-button">
-                  <span className="buy-now-button-text">Buy Now</span>
-                  <img src="/paypal-logo.png" alt="PayPal" className="paypal-logo" />
+                <button className="buy-now-button" onClick={() => navigate('/checkout')}>
+                  <span className="buy-now-button-text">Proceed to Checkout</span>
                 </button>
               </div>
             </div>

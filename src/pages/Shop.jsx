@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import CartIcon from '../components/CartIcon';
-import './Shop.css';
+import '../styles/pages/Shop.css';
 
 const Shop = () => {
   useEffect(() => {
@@ -143,6 +143,7 @@ const Shop = () => {
           <div className="nav-left">
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/shop" className="nav-link">Shop</Link>
+            <Link to="/orders" className="nav-link">My Orders</Link>
           </div>
           <div className="nav-center">
             <img src="/perfume_logo.png" alt="NOULA" className="logo" />
