@@ -13,6 +13,7 @@ const Search = () => {
   const [addedProductName, setAddedProductName] = useState('');
 
   const allProducts = [
+    // Perfumes
     {
       id: 1,
       name: 'Velour Mist',
@@ -40,6 +41,56 @@ const Search = () => {
       description: 'Darkly elegant - amber, patchouli, and rose intertwined in a sensual harmony of mystery and grace.',
       price: '$65.00',
       image: '/perfume9-removebg-preview.png'
+    },
+    {
+      id: 5,
+      name: 'Midnight Bloom',
+      description: 'A mysterious blend of dark florals and rich vanilla that captivates the senses.',
+      price: '$88.00',
+      image: '/perfume2-removebg-preview.png'
+    },
+    {
+      id: 6,
+      name: 'Sunset Serenade',
+      description: 'Warm and inviting - notes of amber, sandalwood, and a hint of citrus create an unforgettable evening scent.',
+      price: '$75.00',
+      image: '/perfume3-removebg-preview.png'
+    },
+    {
+      id: 7,
+      name: 'Arcadia Musk',
+      description: 'A sophisticated blend of musk and soft florals that creates an aura of timeless elegance.',
+      price: '$95.00',
+      image: '/Arcadia20620Musk-removebg-preview.png'
+    },
+    // Body Products
+    {
+      id: 101,
+      name: 'Body Lotion',
+      description: 'Nourishing body lotion infused with natural ingredients for silky smooth skin.',
+      price: '$45.00',
+      image: '/body_product-removebg-preview.png'
+    },
+    {
+      id: 102,
+      name: 'Body Wash',
+      description: 'Gentle cleansing body wash with aromatic fragrances for a luxurious shower experience.',
+      price: '$38.00',
+      image: '/body_product1-removebg-preview.png'
+    },
+    {
+      id: 103,
+      name: 'Body Oil',
+      description: 'Hydrating body oil that leaves your skin glowing and beautifully scented.',
+      price: '$52.00',
+      image: '/body_product2-removebg-preview.png'
+    },
+    {
+      id: 104,
+      name: 'Body Scrub',
+      description: 'Exfoliating body scrub to reveal soft, radiant skin with every use.',
+      price: '$42.00',
+      image: '/body_product-removebg-preview.png'
     }
   ];
 
@@ -65,7 +116,7 @@ const Search = () => {
     // Add default size and other required fields
     const productWithDetails = {
       ...product,
-      size: '100ml',
+      size: product.id >= 100 ? '250ml' : '100ml',
       inStock: true,
       description: product.description
     };
@@ -124,7 +175,7 @@ const Search = () => {
       {/* Search Section */}
       <main className="search-main">
         <div className="search-container">
-          <h1 className="search-title">Search Fragrances</h1>
+          <h1 className="search-title">Search Products</h1>
           <div className="search-input-wrapper">
             <svg className="search-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="11" cy="11" r="8"></circle>
@@ -150,32 +201,42 @@ const Search = () => {
           <div className="search-products-grid">
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
-                <div key={product.id} className="search-product-card">
-                  <div className="search-product-image-container">
-                    <img src={product.image} alt={product.name} className="search-product-image" />
+                <Link key={product.id} to={`/product/${product.id}`} className="search-product-card-link">
+                  <div className="search-product-card">
+                    <div className="search-product-image-container">
+                      <img src={product.image} alt={product.name} className="search-product-image" />
+                    </div>
+                    <h3 className="search-product-name">{product.name}</h3>
+                    <p className="search-product-description">{product.description}</p>
+                    <div className="search-product-footer">
+                      <span className="search-product-price">{product.price}</span>
+                      <button 
+                        className="cart-icon-button" 
+                        aria-label="Add to cart" 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleAddToCart(product);
+                        }}
+                      >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                          <line x1="3" y1="6" x2="21" y2="6"></line>
+                          <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                  <h3 className="search-product-name">{product.name}</h3>
-                  <p className="search-product-description">{product.description}</p>
-                  <div className="search-product-footer">
-                    <span className="search-product-price">{product.price}</span>
-                    <button className="cart-icon-button" aria-label="Add to cart" onClick={() => handleAddToCart(product)}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <path d="M16 10a4 4 0 0 1-8 0"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                </Link>
               ))
             ) : searchQuery ? (
               <div className="no-results">
-                <p>No fragrances found matching "{searchQuery}"</p>
+                <p>No products found matching "{searchQuery}"</p>
                 <p className="no-results-suggestion">Try searching with different keywords</p>
               </div>
             ) : (
               <div className="no-results">
-                <p>Start typing to search for fragrances</p>
+                <p>Start typing to search for fragrances and body products</p>
               </div>
             )}
           </div>
