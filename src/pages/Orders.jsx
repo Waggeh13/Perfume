@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useOrders } from '../context/OrderContext';
+import { useAuth } from '../context/AuthContext';
 import CartIcon from '../components/CartIcon';
 import '../styles/pages/Orders.css';
 
 const Orders = () => {
   const { getAllOrders } = useOrders();
+  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const orders = getAllOrders();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    
+    // Check authentication when component mounts
+    if (!isLoading && !isAuthenticated) {
+      // Redirect to login page if not authenticated
+      navigate('/login', { state: { from: '/orders' } });
+    }
+  }, [isAuthenticated, isLoading, navigate]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -72,12 +80,21 @@ const Orders = () => {
                 <path d="m21 21-4.35-4.35"></path>
               </svg>
             </Link>
-            <Link to="/login" className="icon-button" aria-label="Account">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </Link>
+            {isAuthenticated ? (
+              <Link to="/profile" className="icon-button" aria-label="Profile">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
+            ) : (
+              <Link to="/login" className="icon-button" aria-label="Account">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
+            )}
             <CartIcon />
           </div>
         </nav>
@@ -88,7 +105,17 @@ const Orders = () => {
         <div className="orders-container">
           <h1 className="orders-title">My Orders</h1>
 
-          {orders.length === 0 ? (
+          {!isLoading && !isAuthenticated ? (
+            <div className="empty-orders">
+              <h2 className="empty-orders-title">Please log in to view your orders</h2>
+              <p className="empty-orders-text">You need to be logged in to see your order history.</p>
+              <Link to="/login" className="shop-link-button">Log In</Link>
+            </div>
+          ) : isLoading ? (
+            <div className="empty-orders">
+              <h2 className="empty-orders-title">Loading...</h2>
+            </div>
+          ) : orders.length === 0 ? (
             <div className="empty-orders">
               <h2 className="empty-orders-title">No orders yet</h2>
               <p className="empty-orders-text">Start shopping to see your orders here!</p>

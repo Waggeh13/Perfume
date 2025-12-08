@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import CartIcon from '../components/CartIcon';
 import '../styles/pages/Cart.css';
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, getTotalPrice } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, getTotalPrice, syncCartWithAPI } = useCart();
+  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
+
+  // Sync cart with API when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && cartItems.length > 0) {
+      syncCartWithAPI();
+    }
+  }, [isAuthenticated]); // Only run when authentication status changes
+
+  // Preload Checkout component when cart has items (for faster navigation)
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      // Preload the checkout chunk
+      import('../pages/Checkout');
+    }
+  }, [cartItems.length]);
 
   const deliveryFee = 59.99;
   const tax = 5.00;
@@ -59,12 +76,21 @@ const Cart = () => {
                 <path d="m21 21-4.35-4.35"></path>
               </svg>
             </Link>
-            <Link to="/login" className="icon-button" aria-label="Account">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </Link>
+            {isAuthenticated ? (
+              <Link to="/profile" className="icon-button" aria-label="Profile">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
+            ) : (
+              <Link to="/login" className="icon-button" aria-label="Account">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
+            )}
             <CartIcon />
           </div>
         </nav>
@@ -149,7 +175,17 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <button className="buy-now-button" onClick={() => navigate('/checkout')}>
+                <button 
+                  className="buy-now-button" 
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      // Redirect to login if not authenticated, with return path
+                      navigate('/login', { state: { from: '/cart', returnTo: '/checkout' } });
+                    } else {
+                      navigate('/checkout');
+                    }
+                  }}
+                >
                   <span className="buy-now-button-text">Proceed to Checkout</span>
                 </button>
               </div>

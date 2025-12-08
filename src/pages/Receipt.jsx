@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useOrders } from '../context/OrderContext';
+import { useAuth } from '../context/AuthContext';
 import CartIcon from '../components/CartIcon';
 import '../styles/pages/Receipt.css';
 
@@ -8,6 +9,7 @@ const Receipt = () => {
   const { id } = useParams();
   const { getOrderById } = useOrders();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const order = getOrderById(id);
 
   useEffect(() => {
@@ -130,12 +132,21 @@ const Receipt = () => {
                 <path d="m21 21-4.35-4.35"></path>
               </svg>
             </Link>
-            <Link to="/login" className="icon-button" aria-label="Account">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </Link>
+            {isAuthenticated ? (
+              <Link to="/profile" className="icon-button" aria-label="Profile">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
+            ) : (
+              <Link to="/login" className="icon-button" aria-label="Account">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </Link>
+            )}
             <CartIcon />
           </div>
         </nav>
@@ -175,24 +186,34 @@ const Receipt = () => {
                 </div>
                 <div className="info-item">
                   <span className="info-label">Payment Method:</span>
-                  <span className="info-value">{order.paymentMethod.charAt(0).toUpperCase() + order.paymentMethod.slice(1)}</span>
+                  <span className="info-value">
+                    {(() => {
+                      const method = order.paymentMethod;
+                      if (method && typeof method === 'string' && method.length > 0) {
+                        return method.charAt(0).toUpperCase() + method.slice(1);
+                      }
+                      return 'Not specified';
+                    })()}
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* Shipping Address */}
-            <div className="receipt-section">
-              <h2 className="section-title">Shipping Address</h2>
-              <div className="address-block">
-                <p className="address-line">{order.shippingAddress.fullName}</p>
-                <p className="address-line">{order.shippingAddress.streetAddress}</p>
-                <p className="address-line">
-                  {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode}
-                </p>
-                <p className="address-line">{order.shippingAddress.country}</p>
-                <p className="address-line">Phone: {order.shippingAddress.phoneNumber}</p>
+            {order.shippingAddress && (
+              <div className="receipt-section">
+                <h2 className="section-title">Shipping Address</h2>
+                <div className="address-block">
+                  <p className="address-line">{order.shippingAddress.fullName || 'N/A'}</p>
+                  <p className="address-line">{order.shippingAddress.streetAddress || 'N/A'}</p>
+                  <p className="address-line">
+                    {order.shippingAddress.city || ''}, {order.shippingAddress.state || ''} {order.shippingAddress.zipCode || ''}
+                  </p>
+                  <p className="address-line">{order.shippingAddress.country || 'N/A'}</p>
+                  <p className="address-line">Phone: {order.shippingAddress.phoneNumber || 'N/A'}</p>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Order Items */}
             <div className="receipt-section">
@@ -222,19 +243,19 @@ const Receipt = () => {
               <div className="summary-block">
                 <div className="summary-row">
                   <span className="summary-label">Subtotal:</span>
-                  <span className="summary-value">${order.subtotal.toFixed(2)}</span>
+                  <span className="summary-value">${(order.subtotal || 0).toFixed(2)}</span>
                 </div>
                 <div className="summary-row">
                   <span className="summary-label">Delivery Fee:</span>
-                  <span className="summary-value">${order.deliveryFee.toFixed(2)}</span>
+                  <span className="summary-value">${(order.deliveryFee || 0).toFixed(2)}</span>
                 </div>
                 <div className="summary-row">
                   <span className="summary-label">Tax:</span>
-                  <span className="summary-value">${order.tax.toFixed(2)}</span>
+                  <span className="summary-value">${(order.tax || 0).toFixed(2)}</span>
                 </div>
                 <div className="summary-row summary-total">
                   <span className="summary-label">Total:</span>
-                  <span className="summary-value">${order.total.toFixed(2)}</span>
+                  <span className="summary-value">${(order.total || 0).toFixed(2)}</span>
                 </div>
               </div>
             </div>

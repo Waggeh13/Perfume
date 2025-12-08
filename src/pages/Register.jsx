@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import CartIcon from '../components/CartIcon';
+import API_CONFIG from '../config/api';
 import '../styles/pages/Register.css';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { cartItems, syncCartWithAPI } = useCart();
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
     email: '',
     password: '',
     confirmPassword: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({
+    show: false,
+    message: '',
+    type: 'error',
   });
 
   const handleChange = (e) => {
@@ -20,10 +34,85 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const showToast = (message, type = 'error') => {
+    setToast({
+      show: true,
+      message,
+      type,
+    });
+    setTimeout(() => {
+      setToast({ show: false, message: '', type: 'error' });
+    }, 3000);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      showToast('Passwords do not match.');
+      return;
+    }
+
+    // Validate password length
+    if (formData.password.length < 6) {
+      showToast('Password must be at least 6 characters long.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${API_CONFIG.BASE_URL}/api/users/register`,
+        {
+          fullName: formData.fullName,
+          phoneNumber: formData.phoneNumber,
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      // Handle backend-side errors (even if 200 OK)
+      if (response.data.error) {
+        showToast(response.data.message || 'Registration failed. Please try again.');
+        return;
+      }
+
+      // If registration includes auto-login with token
+      if (response.data.token) {
+        const token = response.data.token;
+        const tokenData = jwtDecode(token);
+        login(token, tokenData, 'user');
+        
+        // Sync cart with API after successful registration
+        if (cartItems.length > 0) {
+          await syncCartWithAPI();
+        }
+        
+        showToast('Registration successful!', 'success');
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+      } else {
+        // If registration requires email verification or manual login
+        showToast('Registration successful! Please login.', 'success');
+        setTimeout(() => {
+          navigate('/login');
+        }, 1500);
+      }
+    } catch (err) {
+      showToast(
+        err.response?.data?.message || 'Registration failed. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -138,10 +227,35 @@ const Register = () => {
               </div>
             </div>
 
-            <button type="submit" className="submit-button">
-              Create Account
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
+
+          {/* Toast popup */}
+          {toast.show && (
+            <div 
+              style={{
+                position: 'fixed',
+                top: '20px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                padding: '12px 16px',
+                borderRadius: '6px',
+                fontSize: '14px',
+                textAlign: 'center',
+                backgroundColor: toast.type === 'success' ? '#d4edda' : '#f8d7da',
+                color: toast.type === 'success' ? '#155724' : '#721c24',
+                border: `1px solid ${toast.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                lineHeight: '1.4',
+                zIndex: 1000,
+                minWidth: '300px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+              }}
+            >
+              {toast.message}
+            </div>
+          )}
 
           <p className="account-link">
             Already have an account? <Link to="/login" className="link-text">Login here</Link>
